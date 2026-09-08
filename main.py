@@ -168,6 +168,40 @@ def show_history(profile):
         print(f"AI : {chat['bot']}")
         print("-" *170)
 
+# Delete Profile
+def delete_profile(profile):
+
+    print("\n===== DELETE PROFILE =====\n")
+
+    confirm = input(
+        f"Are you sure you want to delete profile '{profile['name']}'? (yes/no): "
+    )
+
+    if confirm.lower() == "yes":
+
+        profile_file = f"profiles/{profile['name']}.json"
+        history_file = f"history/{profile['name']}_history.json"
+
+        # Delete profile
+        if os.path.exists(profile_file):
+            os.remove(profile_file)
+
+        # Delete chat history
+        if os.path.exists(history_file):
+            os.remove(history_file)
+
+        print(
+            f"\nProfile '{profile['name']}' deleted successfully!"
+        )
+
+        return True
+
+    else:
+
+        print("\nProfile deletion cancelled.")
+
+        return False    
+
 #Main program
 
 profile = select_profile()
@@ -184,6 +218,7 @@ profile       -> View Profile
 updateprofile -> Update Profile
 newprofile    -> Create New Profile
 switch        -> Switch Profile
+deleteprofile -> Delete Current Profile
 exit          -> Exit Program
 ===================================
 """)
@@ -200,6 +235,12 @@ while True:
           view_profile(profile)
     elif user.lower() == "updateprofile":
           profile = update_profile(profile)
+    elif user.lower() == "deleteprofile":
+        deleted = delete_profile(profile)
+    if deleted:
+        print("\nPlease select or create another profile.")
+        profile = select_profile()
+        print(f"\nCurrent Profile: {profile['name']}")
     elif user.lower() == "newprofile":
           profile = create_profile()
           print(f"\nCurrent Profile: {profile['name']}")
