@@ -232,15 +232,15 @@ while True:
     elif user.lower()=="history":
         show_history(profile)
     elif user.lower()=="profile":
-          view_profile(profile)
+        view_profile(profile)
     elif user.lower() == "updateprofile":
-          profile = update_profile(profile)
+        profile = update_profile(profile)
     elif user.lower() == "deleteprofile":
         deleted = delete_profile(profile)
-    if deleted:
-        print("\nPlease select or create another profile.")
-        profile = select_profile()
-        print(f"\nCurrent Profile: {profile['name']}")
+        if deleted:
+            print("\nPlease select or create another profile.")
+            profile = select_profile()
+            print(f"\nCurrent Profile: {profile['name']}")
     elif user.lower() == "newprofile":
           profile = create_profile()
           print(f"\nCurrent Profile: {profile['name']}")
